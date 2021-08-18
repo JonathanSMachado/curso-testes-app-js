@@ -24,4 +24,8 @@ it("should throw an error when not sum is possible", () => {
   expect(() => {
     sum();
   }).toThrowError();
+
+  expect(() => {
+    sum(2);
+  }).toThrowError();
 });
