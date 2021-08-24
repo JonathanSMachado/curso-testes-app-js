@@ -1,0 +1,11 @@
+{
+  "Cart": {
+    "description": "Auto imported from components/Cart.vue"
+  },
+  "CartItem": {
+    "description": "Auto imported from components/CartItem.vue"
+  },
+  "ProductCard": {
+    "description": "Auto imported from components/ProductCard.vue"
+  }
+}
