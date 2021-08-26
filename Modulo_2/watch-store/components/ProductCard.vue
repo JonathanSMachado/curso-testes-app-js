@@ -15,6 +15,7 @@
           hover:bg-blue-500
           focus:outline-none focus:bg-blue-500
         "
+        @click="addToCart"
       >
         <svg
           class="h-5 w-5"
@@ -47,7 +48,12 @@ export default {
       required: true,
     },
   },
-}
+  methods: {
+    addToCart() {
+      this.$emit('addToCart', { product: this.product });
+    },
+  },
+};
 </script>
 
 <style></style>
