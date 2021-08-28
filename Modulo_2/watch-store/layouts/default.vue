@@ -32,7 +32,10 @@
             Brand
           </div>
           <div class="flex items-center justify-end w-full">
-            <button class="text-gray-600 focus:outline-none mx-4 sm:mx-0">
+            <button
+              class="text-gray-600 focus:outline-none mx-4 sm:mx-0"
+              @click="toggleCart"
+            >
               <svg
                 class="h-5 w-5"
                 fill="none"
@@ -72,42 +75,48 @@
             <a
               class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0"
               href="#"
-              >Home</a
             >
+              Home
+            </a>
             <a
               class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0"
               href="#"
-              >Shop</a
             >
+              Shop
+            </a>
             <a
               class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0"
               href="#"
-              >Categories</a
             >
+              Categories
+            </a>
             <a
               class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0"
               href="#"
-              >Contact</a
             >
+              Contact
+            </a>
             <a
               class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0"
               href="#"
-              >About</a
             >
+              About
+            </a>
           </div>
         </nav>
       </div>
     </header>
 
+    <cart :is-open="isCartOpen" @close="toggleCart" />
     <nuxt />
 
     <footer class="bg-gray-200">
       <div
         class="container mx-auto px-6 py-3 flex justify-between items-center"
       >
-        <a href="#" class="text-xl font-bold text-gray-500 hover:text-gray-400"
-          >Brand</a
-        >
+        <a href="#" class="text-xl font-bold text-gray-500 hover:text-gray-400">
+          Brand
+        </a>
         <p class="py-2 text-gray-500 sm:py-0">All rights reserved</p>
       </div>
     </footer>
@@ -115,7 +124,20 @@
 </template>
 
 <script>
-export default {};
+import Cart from '@/components/Cart';
+export default {
+  components: { Cart },
+  data() {
+    return {
+      isCartOpen: false,
+    };
+  },
+  methods: {
+    toggleCart() {
+      this.isCartOpen = !this.isCartOpen;
+    },
+  },
+};
 </script>
 
 <style></style>
