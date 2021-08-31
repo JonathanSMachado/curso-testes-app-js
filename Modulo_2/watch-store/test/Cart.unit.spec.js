@@ -1,8 +1,20 @@
 import { mount } from '@vue/test-utils';
 import { expect } from '@jest/globals';
 import Cart from '@/components/Cart';
+import CartItem from '@/components/CartItem';
+import { makeServer } from '@/miragejs/server';
 
 describe('Cart', () => {
+  let server;
+
+  beforeEach(() => {
+    server = makeServer({ environment: 'test' });
+  });
+
+  afterEach(() => {
+    server.shutdown();
+  });
+
   // eslint-disable-next-line require-await
   it('should mount the component', async () => {
     const wrapper = mount(Cart);
@@ -43,5 +55,18 @@ describe('Cart', () => {
     const wrapper = mount(Cart);
 
     expect(wrapper.text()).toContain('Cart is empty');
+  });
+
+  // eslint-disable-next-line require-await
+  it('should display 2 instances of CartItem when 2 producst are provided', async () => {
+    const products = server.createList('product', 2);
+    const wrapper = mount(Cart, {
+      propsData: {
+        products,
+      },
+    });
+
+    expect(wrapper.findAllComponents(CartItem)).toHaveLength(2);
+    expect(wrapper.text()).not.toContain('Cart is empty');
   });
 });

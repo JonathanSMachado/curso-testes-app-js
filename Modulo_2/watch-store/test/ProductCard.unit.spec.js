@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { afterEach, beforeEach, expect } from '@jest/globals';
 import ProductCard from '@/components/ProductCard';
 import { makeServer } from '@/miragejs/server';
+import { cartState } from '@/state';
 
 describe('ProductCard - unit', () => {
   let server;
@@ -46,13 +47,13 @@ describe('ProductCard - unit', () => {
     expect(wrapper.text()).toContain('$22.00');
   });
 
-  it('should emit the event addToCart when ProductCard button is clicked', async () => {
-    const { wrapper, product } = mountProductCard();
+  it('should add item to cartState on button click', async () => {
+    const { wrapper } = mountProductCard();
 
     await wrapper.find('button').trigger('click');
 
-    expect(wrapper.emitted().addToCart).toBeTruthy();
-    expect(wrapper.emitted().addToCart.length).toBe(1);
-    expect(wrapper.emitted().addToCart[0]).toEqual([{ product }]);
+    expect(cartState.items).toHaveLength(1);
   });
+
+  it.todo('should ensure product is not added to the cart twice');
 });
