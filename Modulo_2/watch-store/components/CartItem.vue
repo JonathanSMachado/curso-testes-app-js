@@ -49,6 +49,20 @@
             </svg>
           </button>
         </div>
+        <div>
+          <button
+            data-testid="remove-button"
+            class="
+              text-sm text-gray-400
+              hover:text-gray-800
+              transition-all
+              ease-linear
+            "
+            @click="removeProduct"
+          >
+            Remover
+          </button>
+        </div>
       </div>
     </div>
     <span class="text-gray-600">${{ product.price }}</span>
@@ -74,6 +88,9 @@ export default {
       if (this.quantity > 0) {
         this.quantity--;
       }
+    },
+    removeProduct() {
+      this.$cart.removeProduct(this.product.id);
     },
   },
 };
