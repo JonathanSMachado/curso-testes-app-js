@@ -15,13 +15,21 @@ describe('ProductCard - unit', () => {
         'https://images.unsplash.com/photo-1524592094714-0f0654e20314?ixlib=rb-1.2.1&auto=format&fit=crop&w=689&q=80',
     });
 
+    const cartManager = new CartManager();
+
+    const wrapper = mount(ProductCard, {
+      propsData: {
+        product,
+      },
+      mocks: {
+        $cart: cartManager,
+      },
+    });
+
     return {
-      wrapper: mount(ProductCard, {
-        propsData: {
-          product,
-        },
-      }),
+      wrapper,
       product,
+      cartManager,
     };
   };
 
@@ -48,11 +56,14 @@ describe('ProductCard - unit', () => {
   });
 
   it('should add item to cartState on button click', async () => {
-    const { wrapper } = mountProductCard();
-    const manager = new CartManager();
+    const { wrapper, cartManager, product } = mountProductCard();
+    const spy1 = jest.spyOn(cartManager, 'open');
+    const spy2 = jest.spyOn(cartManager, 'addProduct');
 
     await wrapper.find('button').trigger('click');
 
-    expect(manager.getState().items).toHaveLength(1);
+    expect(spy1).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledTimes(1);
+    expect(spy2).toHaveBeenCalledWith(product);
   });
 });
