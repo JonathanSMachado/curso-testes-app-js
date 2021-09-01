@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils';
 import { afterEach, beforeEach, expect } from '@jest/globals';
 import ProductCard from '@/components/ProductCard';
 import { makeServer } from '@/miragejs/server';
-import { cartState } from '@/state';
+import { CartManager } from '@/managers/CartManager';
 
 describe('ProductCard - unit', () => {
   let server;
@@ -49,11 +49,10 @@ describe('ProductCard - unit', () => {
 
   it('should add item to cartState on button click', async () => {
     const { wrapper } = mountProductCard();
+    const manager = new CartManager();
 
     await wrapper.find('button').trigger('click');
 
-    expect(cartState.items).toHaveLength(1);
+    expect(manager.getState().items).toHaveLength(1);
   });
-
-  it.todo('should ensure product is not added to the cart twice');
 });

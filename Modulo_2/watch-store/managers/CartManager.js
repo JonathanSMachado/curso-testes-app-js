@@ -5,6 +5,12 @@ const initialState = {
   items: [],
 };
 
+export default {
+  install: (Vue) => {
+    Vue.prototype.$cart = new CartManager();
+  },
+};
+
 export class CartManager {
   state;
 
