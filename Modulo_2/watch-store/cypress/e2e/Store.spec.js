@@ -17,4 +17,36 @@ context('Store e2e', () => {
     cy.get('body').contains('Brand');
     cy.get('body').contains('Wrist Watch');
   });
+
+  context('Store > Search for products', () => {
+    it('should type in the search field', () => {
+      cy.visit('http://localhost:3000');
+
+      cy.get('input[type=search]')
+        .type('Some text here')
+        .should('have.value', 'Some text here');
+    });
+
+    it('should return 1 product when "Relógio bonito" is used as search term', () => {
+      server.create('product', {
+        title: 'Relógio bonito',
+      });
+      server.createList('product', 10);
+
+      cy.visit('http://localhost:3000');
+      cy.get('input[type=search]').type('Relógio bonito');
+      cy.get('[data-testid=form-search]').submit();
+      cy.get('[data-testid=product-card]').should('have.length', 1);
+    });
+
+    it('should not return any product', () => {
+      server.createList('product', 10);
+
+      cy.visit('http://localhost:3000');
+      cy.get('input[type=search]').type('Relógio bonito');
+      cy.get('[data-testid=form-search]').submit();
+      cy.get('[data-testid=product-card]').should('have.length', 0);
+      cy.get('body').contains('0 Products');
+    });
+  });
 });
