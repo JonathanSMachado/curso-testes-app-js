@@ -76,7 +76,7 @@ context('Store e2e', () => {
     });
   });
 
-  context.only('Store > Shopping cart', () => {
+  context('Store > Shopping cart', () => {
     const quantity = 10;
 
     beforeEach(() => {
@@ -94,6 +94,20 @@ context('Store e2e', () => {
       gid('shopping-cart').should('not.have.class', 'hidden');
       g('@toggleButton').click({ force: true });
       gid('shopping-cart').should('have.class', 'hidden');
+    });
+
+    it('should display "Cart is empty" message when there are no products', () => {
+      gid('toggle-button').as('toggleButton');
+      g('@toggleButton').click();
+      gid('shopping-cart').contains('Cart is empty');
+    });
+
+    it('should not display "Clear Cart" button when cart is empty', () => {
+      gid('toggle-button').as('toggleButton');
+      g('@toggleButton').click();
+      gid('shopping-cart')
+        .find('[data-testid="clear-cart-button"]')
+        .should('have.length', 0);
     });
 
     it('should open shopping cart when a product is added', () => {
@@ -120,6 +134,20 @@ context('Store e2e', () => {
     it('should add all products to the cart', () => {
       cy.addToCart({ indexes: 'all' });
       gid('cart-item').should('have.length', quantity);
+    });
+
+    it('should remove a product from cart', () => {
+      cy.addToCart({ index: 2 });
+      gid('cart-item').should('have.length', 1);
+      gid('cart-item').first().find('[data-testid="remove-button"]').click();
+      gid('cart-item').should('have.length', 0);
+    });
+
+    it('should remove all producst from cart', () => {
+      cy.addToCart({ indexes: [1, 2, 3] });
+      gid('cart-item').should('have.length', 3);
+      gid('clear-cart-button').click();
+      gid('cart-item').should('have.length', 0);
     });
   });
 });

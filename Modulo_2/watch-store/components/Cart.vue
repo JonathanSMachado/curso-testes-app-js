@@ -23,6 +23,7 @@
     <div class="flex items-center justify-between">
       <h3 class="text-2xl font-medium text-gray-700">Your cart</h3>
       <button
+        v-if="hasProducts"
         data-testid="clear-cart-button"
         class="hover:text-red-500 transition-colors ease-linear"
         @click="clearProducts"
