@@ -149,5 +149,36 @@ context('Store e2e', () => {
       gid('clear-cart-button').click();
       gid('cart-item').should('have.length', 0);
     });
+
+    it('should display quantity 1 when product is added to the cart', () => {
+      cy.addToCart({ index: 1 });
+      gid('quantity').contains(1);
+    });
+
+    it('should increase quantity when button + gets clicked', () => {
+      cy.addToCart({ index: 1 });
+      gid('button-plus').click();
+      gid('quantity').contains(2);
+      gid('button-plus').click();
+      gid('quantity').contains(3);
+    });
+
+    it('should decrease quantity when button - gets clicked', () => {
+      cy.addToCart({ index: 1 });
+      gid('button-plus').click();
+      gid('button-plus').click();
+      gid('quantity').contains(3);
+      gid('button-minus').click();
+      gid('quantity').contains(2);
+      gid('button-minus').click();
+      gid('quantity').contains(1);
+    });
+
+    it('should not decrease below zero when button - gets clicked', () => {
+      cy.addToCart({ index: 1 });
+      gid('button-minus').click();
+      gid('button-minus').click();
+      gid('quantity').contains(0);
+    });
   });
 });
