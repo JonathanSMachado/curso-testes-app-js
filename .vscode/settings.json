@@ -1,7 +1,3 @@
 {
-  "git.ignoreLimitWarning": true,
-  "workbench.colorCustomizations": {
-    "activityBarBadge.background": "#e2e2e2",
-    "activityBarBadge.foreground": "#333"
-  }
+  "git.ignoreLimitWarning": true
 }
