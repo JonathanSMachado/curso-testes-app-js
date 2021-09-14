@@ -1,7 +1,7 @@
 import createError from 'http-errors';
+import { StatusCodes } from 'http-status-codes';
 import { appError } from './errors';
 import { logger } from './logger';
-import { StatusCodes } from 'http-status-codes';
 
 jest.mock('./logger');
 jest.mock('http-errors');
